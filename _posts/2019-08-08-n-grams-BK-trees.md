@@ -1,5 +1,5 @@
 ---
-title: n-grams + BK-trees: tricks for collapsing UMIs faster
+title: "n-grams + BK-trees: tricks for collapsing UMIs faster"
 published: true
 ---
 
