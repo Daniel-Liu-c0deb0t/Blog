@@ -11,7 +11,7 @@ Each UMI is a short, unique random sequence that corresponds to a certain DNA fr
 
 As with many bioinformatics tasks that involve processing sequenced reads, the difficulty lies in handling sequencing and PCR amplification errors. Therefore, the deduplication task is just somehow grouping similar UMIs together, where similarity is defined by counting the number of mismatches between two UMI sequences. Since UMIs are used very often, this task has been thoroughly explored. Most notably, the "directional adjacency" method from [UMI-tools](https://genome.cshlp.org/content/early/2017/01/18/gr.209601.116.abstract) involves first obtaining the frequency of each unique UMI, and then grouping low frequency UMIs with high frequency UMIs. The main intuition behind this is idea is that UMIs that appear frequently have a very high chance of being correctly amplified and sequenced, while UMIs that appear less frequently are most likely wrong. This algorithm is discussed in more detail in [this](https://cgatoxford.wordpress.com/2015/08/14/unique-molecular-identifiers-the-problem-the-solution-and-the-proof/) blog post. An image comparison of different grouping algorithms, from the blog post:
 
-![](../assets/UMI_tools_grouping_methods.png)
+![](../assets/UMI_tools_grouping_methods.png){:width="700px" align="center"}
 
 Consider what happens for each UMI (which we will can the "queried" UMI): we need to quickly find UMIs that are similar to the queried UMI that also have a UMI frequency lower than our threshold. Let us call this step a single "query". After multiple queries, we build the full UMI graph as shown above by connecting the similar UMIs. Each connection is directional, so we connect higher frequency UMIs to lower frequency UMIs. Then, we need to group lower frequency UMIs together with the high frequency UMI using the graph, and we assume that the corresponding sequenced reads for the grouped UMIs all originate from the same DNA fragment.
 
@@ -39,7 +39,7 @@ Here is an example of a BK-tree:
 
 The main problem in the n-grams algorithm is that we have to check every single UMI that shares at least one n-gram with our queried UMI. Many of these UMIs may not be similar to our queried UMI, so it is definately a good idea to transform the list used in the n-grams method into something else, like a BK-tree. Then, each unique n-gram maps to a BK-tree that contains all of the UMIs associated with that n-gram, and we can prune even more UMIs from our search space. Here is an example of the n-grams BK-tree algorithm:
 
-![](../assets/ngrams_bktrees.png)
+![](../assets/ngrams_bktrees.png){:width="500px"}
 
 The main advantage of the n-grams BK-trees data structure over other "brute force" type algorithms that go through all possible errors that could occur in a UMI string is that it does not directly scale exponentially as the number of errors we allow or the UMI length increases.
 
@@ -79,23 +79,23 @@ It is important to remember that the tricks for speeding up UMI deduplication ma
 
 First, let us see how fast the n-grams BK-trees method performs runs compared to other methods as the number of unique UMIs increases:
 
-![](../assets/umi_increase_run_time.png)
+![](../assets/umi_increase_run_time.png){:width="700px"}
 
 The n-grams BK-trees method is able to make use of the benefits of both the n-grams and the BK-tree methods (individually), as it performs better.
 
 If we increase the length of the UMIs, then we see that it ties with the n-grams method:
 
-![](../assets/umi_length_increase_run_time.png)
+![](../assets/umi_length_increase_run_time.png){:width="500px"}
 
 If we increase the number of errors allowed, then the n-grams BK-trees method scales much more favorably compared to other methods:
 
-![](../assets/umi_edits_increase_run_time.png)
+![](../assets/umi_edits_increase_run_time.png){:width="500px"}
 
 Note that in all three experiments, we use simulated (randomly generated) datasets. In practice, when there are less UMIs at a single alignment coordinate, the n-grams BK-trees method does not result in such a dramatic gains in performance.
 
 For a little more information about the n-grams BK-tree data structure, we can look at some statistics about the n-grams with more than 160,000 UMIs:
 
-![](../assets/ngrams_stats.png)
+![](../assets/ngrams_stats.png){:width="300px"}
 
 We can see that the n-grams method is able to prune a significant portion of the UMIs. The largest BK-tree is only built on around 140 UMIs.
 
