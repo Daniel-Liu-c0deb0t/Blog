@@ -37,7 +37,7 @@ Here is an example of a BK-tree:
 
 ![](../assets/bktree.png){:width="500px"}
 
-The main problem in the n-grams algorithm is that we have to check every single UMI that shares at least one n-gram with our queried UMI. Many of these UMIs may not be similar to our queried UMI, so it is definately a good idea to transform the list used in the n-grams method into something else, like a BK-tree. Then, each unique n-gram maps to a BK-tree that contains all of the UMIs associated with that n-gram, and we can prune even more UMIs from our search space. Here is an example of the n-grams BK-tree algorithm:
+The main problem in the n-grams algorithm is that we have to check every single UMI that shares at least one n-gram with our queried UMI. Many of these UMIs may not be similar to our queried UMI, so it is definately a good idea to transform the list used in the n-grams method into something else, like a BK-tree. Then, each unique n-gram maps to a BK-tree that contains all of the UMIs associated with that n-gram, and we can prune even more UMIs from our search space. Here is an example of the n-grams BK-trees algorithm:
 
 ![](../assets/ngrams_bktrees.png){:width="500px"}
 
