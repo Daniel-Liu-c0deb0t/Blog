@@ -23,7 +23,7 @@ My work on adversarial attacks in 3D space ([paper]()) is an example of defining
 
 ## 3. Diversity
 
-When working on a research problem and its subproblems, especially through the working forwards method, try to find diverse, marginally related ideas and attempt to connect them to the research problem. Sometimes, this connection may be novel. Even if this connection proves fruitless, it may reveal an alternative approach to the problem. The marginally related ideas can be found through learning. In fact, when learning about new topics, I often think about connecting those new topics to each of the research problems I have tackled before.
+When working on a research problem and its subproblems, especially through the working forwards method, try to find diverse, marginally related ideas and attempt to connect them to the research problem. Sometimes, this connection may be novel. Even if this connection proves fruitless, it may reveal an alternative approach to the problem. The marginally related ideas can be found through learning. In fact, when learning about new topics, I often think about connecting those new topics to each of the research problems I have tackled before. Instead of looking for an overarching idea, this method involves looking at the tools, and then asking what those tools can build if they are used together.
 
 To learn different ideas, I do the following in my spare time:
 - Read relevant research subreddits on Reddit.
