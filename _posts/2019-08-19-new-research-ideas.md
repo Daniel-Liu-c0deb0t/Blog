@@ -1,6 +1,6 @@
 ---
 title: "Coming up with new research ideas"
-published: false
+published: true
 ---
 
 This post contains some notes on methods for obtaining research ideas, so I can remember to apply them when I am stuck.
@@ -19,7 +19,7 @@ The UMICollapse tool ([paper](https://www.biorxiv.org/content/10.1101/648683v2))
 
 The idea is to examine the main research problem from a completely different angle that is not yet examined in a previous work. Usually, this involves defining a new metric. For example, if the previous work claims to achieve a high score under a certain metric, then come up with a different meaningful metric and attempt to get better results under this new metric.
 
-My work on adversarial attacks in 3D space ([paper]()) is an example of defining new metrics. In addition to creating effective attacks against 3D neural networks, I examined alternative goals like the perceptibility of the adversarial perturbations to humans, the ease of construction of the adversarial examples in real-life, and the effectiveness of the attacks against defensive techniques. In this case, I came up with new ideas by asking myself, "what other desirable qualities of adversarial examples do we want?"
+My work on adversarial attacks in 3D space ([paper](https://arxiv.org/abs/1908.06062)) is an example of defining new metrics. In addition to creating effective attacks against 3D neural networks, I examined alternative goals like the perceptibility of the adversarial perturbations to humans, the ease of construction of the adversarial examples in real-life, and the effectiveness of the attacks against defensive techniques. In this case, I came up with new ideas by asking myself, "what other desirable qualities of adversarial examples do we want?"
 
 ## 3. Diversity
 
@@ -34,6 +34,6 @@ To learn different ideas, I do the following in my spare time:
 
 Sometimes I come up with a random idea not exactly related to what I am working on, and then I google it to find if it has been done. Often times, someone else has already examined this idea. In this case, I can still learn a new concept that I can use in future work. Other times, if I am lucky, then I get a new connection between two different ideas that are related to my current research, and I can get a new algorithm or analysis technique out of it.
 
-An example of this diversity method in action is how I came up with the adversarial sinks attack for 3D points ([paper]()). The general premise of the attack is to pull points on a 3D object towards sink points. This idea was inspired by black holes and how they attract other objects, but it was ultimately named after the source/sinks in network flow problems. I also came up with the idea of actually attempting to approximate the true shape of a 3D point set through alpha shapes, which stems from Delaunay triangulations that I considered for nearest neighbor searches in my bioinformatics work on finding similar DNA sequences.
+An example of this diversity method in action is how I came up with the adversarial sinks attack for 3D points ([paper](https://arxiv.org/abs/1908.06062)). The general premise of the attack is to pull points on a 3D object towards sink points. This idea was inspired by black holes and how they attract other objects, but it was ultimately named after the source/sinks in network flow problems. I also came up with the idea of actually attempting to approximate the true shape of a 3D point set through alpha shapes, which stems from Delaunay triangulations that I considered for nearest neighbor searches in my bioinformatics work on finding similar DNA sequences.
 
 Another example of this method is how I came up with using a domain-specific language for describing patterns while preprocessing DNA sequences ([paper](https://peerj.com/articles/7170/)). I knew that the string matching ideas for finding patterns were related to matching regular expressions, so I thought, "why not go one step further and make a full _language_?" Sometimes, generalizing further works well.
