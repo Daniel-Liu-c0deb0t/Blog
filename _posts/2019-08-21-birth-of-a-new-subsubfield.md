@@ -22,7 +22,7 @@ Now, let us go over a little background on 3D point clouds and their neural netw
 
 ## Point clouds
 
-A 3D point cloud provides an approximation of a 3D object's shape. This shape is only the boundary of a 3D object, so it is hollow. If we represent the true shape as an infinite set of points \(S\), then we have \(x \subset S\) for a point cloud \(x\). For simplicity, we will assume that \(x\) is evenly sampled from the true shape. When point clouds are obtained through scanning objects in the real world (LiDAR and RGB-D scans, or photogrammetry), they are usually uneven and partially occluded.
+A 3D point cloud provides an approximation of a 3D object's shape. This shape is only the boundary of a 3D object, so it is hollow. If we represent the true shape as an infinite set of points $S$, then we have $x \\subset S$ for a point cloud $x$. For simplicity, we will assume that $x$ is evenly sampled from the true shape. When point clouds are obtained through scanning objects in the real world (LiDAR and RGB-D scans, or photogrammetry), they are usually uneven and partially occluded.
 
 3D point clouds differ from 2D images in a few ways:
 1. The order of points does not matter.
@@ -35,16 +35,16 @@ The challenge of learning in 3D space is to deal with the order and density inva
 
 # Basic attacks in 3D
 
-The most straightforward attack is by using gradient descent to directly perturb the position of each point. We are essentially solving the following optimization problem for a point cloud \(x\):
+The most straightforward attack is by using gradient descent to directly perturb the position of each point. We are essentially solving the following optimization problem for a point cloud $x$:
 
-\begin{align}
-&\text{maximize}& &J(f_\theta(x + \delta), y)
-&\text{subject to}& &||\delta||_p \leq \epsilon
-\end{align}
+\\begin{align}
+&\\text{maximize}& &J(f_\\theta(x + \\delta), y)
+&\\text{subject to}& &||\\delta||_p \\leq \\epsilon
+\\end{align}
 
-\(J(\cdot, \cdot)\) represents the loss function, \(y\) is the label class, and \(f_\theta\) is a neural network parameterized by \(\theta\). Notice that the perturbation \(\delta\) is bounded by \(\epsilon\) under the \(L_p\) norm, and we do not clip \(x + \delta\) because unlike 2D image color channels, the positions of 3D points are unbounded. \(\epsilon\) also provides a way for us to measure the perceptibility of adversarial perturbations.
+$J(\\cdot, \\cdot)$ represents the loss function, $y$ is the label class, and $f_\\theta$ is a neural network parameterized by $\\theta$. Notice that the perturbation $\\delta$ is bounded by $\\epsilon$ under the $L_p$ norm, and we do not clip $x + \\delta$ because unlike 2D image color channels, the positions of 3D points are unbounded. $\\epsilon$ also provides a way for us to measure the perceptibility of adversarial perturbations.
 
-Just like with 2D images, this method works very well for generating adversarial attacks. Here are visualizations of adversarial perturbations (bounded with the \(L_2\) norm) on a car and a person from the ModelNet40 dataset:
+Just like with 2D images, this method works very well for generating adversarial attacks. Here are visualizations of adversarial perturbations (bounded with the $L_2$ norm) on a car and a person from the ModelNet40 dataset:
 
 ![]()
 
@@ -54,19 +54,19 @@ The perturbed points are orange.
 
 # Defense: removing outliers
 
-Right away, we notice that constraining the perturbations using the \(L_2\) norm results in some points being perturbed more than others, and those points become outliers in the point set. Therefore, a simple defense would be to just remove those outlier points. A common method for identifying outliers is based on each point and its \(k\)-nearest neighbors. Finding points that are outliers is done by examining the distribution of distances between each point and its nearest neighbors. Afterwards, the outlier points that are too far away from its \(k\)-nearest neigbors are removed from the point set.
+Right away, we notice that constraining the perturbations using the $L_2$ norm results in some points being perturbed more than others, and those points become outliers in the point set. Therefore, a simple defense would be to just remove those outlier points. A common method for identifying outliers is based on each point and its $k$-nearest neighbors. Finding points that are outliers is done by examining the distribution of distances between each point and its nearest neighbors. Afterwards, the outlier points that are too far away from its $k$-nearest neigbors are removed from the point set.
 
-Removing outliers is actually very effective as a defense---it performs much better than adversarial training, a classical defense that involves teaching a neural network the correct labels for adversarial examples. In practice, removing outliers works well even if we constrain the amount of perturbation to each _point_ by an \(\epsilon\) so that large perturbations are not possible.
+Removing outliers is actually very effective as a defense---it performs much better than adversarial training, a classical defense that involves teaching a neural network the correct labels for adversarial examples. In practice, removing outliers works well even if we constrain the amount of perturbation to each _point_ by an $\\epsilon$ so that large perturbations are not possible.
 
 Interestingly, this method was proposed in parallel in many different papers on defending against adversarial attacks on point clouds. I guess everyone noticed the outliers generated by adversarial perturbations.
 
 # Defense: removing salient points
 
-Since we perturb points by their gradients, it makes sense to remove adversarial points by examining their gradients to hopefully restore the point cloud of an object. The idea is to first calculate the saliency of each point (at index \(i\) in \(x\)) through
+Since we perturb points by their gradients, it makes sense to remove adversarial points by examining their gradients to hopefully restore the point cloud of an object. The idea is to first calculate the saliency of each point (at index $i$ in $x$) through
 
-\[
-s[i] = \max_j ||(\nabla_{x^\ast} f_\theta(x^\ast)[j])[i]||_2
-\]
+$$
+s[i] = \\max_j ||(\\nabla_{x^\\ast} f_\\theta(x^\\ast)[j])[i]||_2
+$$
 
 Then, we can sort the points by their saliencies and remove points with high saliencies. In other words, points that have large saliencies, which are the magnitudes of the gradient of each output class with respect to each point, are removed. In practice, this works well as a defense, and it performs better than adversarial training. This defense avoids the issue of being unable to identify adversarial points if there are no outliers, but we are making the assumption that points with large magnitudes of gradients are perturbed.
 
