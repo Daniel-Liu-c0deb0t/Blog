@@ -180,6 +180,10 @@ For a quick run down of all the attacks proposed in my second paper, just look a
 
 ![](../assets/attacks_2d.png){:width="800px"}
 
+The shape attacks all perform very well against point removal defenses, and they perform much better than the iterative gradient $$L_2$$ attack, which represents a naive pointwise attack:
+
+![](../assets/removing_points.png){:width="700px"}
+
 # Removing points as an attack
 
 Another avenue for attacking point clouds is through _removing_ points ([this](https://arxiv.org/abs/1812.01687) and [this](https://arxiv.org/abs/1902.10899) papers). This is done by dropping points that are part of the critical point set that contribute to decreasing the loss between the model output and the correct class. The saliency (gradient) is used to find these critical points. Note that this idea is very similar to the defense method of removing salient points.
