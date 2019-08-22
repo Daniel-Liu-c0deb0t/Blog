@@ -1,5 +1,5 @@
 ---
-title: "The birth of a new subsubfield: adversarial attacks on 3D point sets"
+title: "The birth of a new sub-sub-field: adversarial attacks on 3D point sets"
 published: false
 ---
 
@@ -107,7 +107,7 @@ Although the perturbation of each point is very small and kept on the shape of t
 
 In addition to constraining the Hausdorff distance, we can add another constraint to ensure an uniform density distribution of points after perturbing points. Therefore, the perturbations must change the overall shape of an point cloud, since small changes to the point distribution are not allowed. This is more realistic than having a few points suspended in mid-air, far away from the main 3D object. Shape attacks are also effective against point removal defenses, as they modify or destroy the density information that outlier removal relies on.
 
-## Resampling
+## Perturbation Resampling
 
 We can express the idea of having the points $x^\\ast$ evenly distributed on a shape $S^\\ast$ as an optimization problem maximizing the distance between points:
 
@@ -118,7 +118,7 @@ $$
 
 However, we do not need to solve this problem exactly; a greedy approximation using farthest point sampling works fine. The perturbation resampling attack is simple: just perturb points using gradient descent, but resample a portion of the points on the estimated adversarial shape that is determined by the perturbed points.
 
-## Sticks
+## Adversarial Sticks
 
 We can also add new adversarial features to the shape of the point cloud. In , they propose adding new clusters of points, or even smaller versions of other point clouds that float in mid-air, near a clean point cloud. We take a simpler and more realistic route by adding a few sticks, or line segments, that are attached to the shape of the clean point cloud. Then, the adversarial object will look like a porcupine. Conceptually, we need to figure out where to place the sticks on an object, and the length/direction of each stick. Formally, we are solving the following optimization problem:
 
@@ -132,12 +132,41 @@ $\\alpha$ is a set of points representing where the sticks are attached to the s
 
 Like perturbation resampling, we can just approximate this by first perturbing _points_ using gradient descent, and then connecting those points to the closest point on the surface of a 3D object at the end. Finally, we need to sample points on the adversarial sticks.
 
-## Sinks
+## Adversarial Sinks
 
+With our previous techniques, we need to resample points during gradient descent. This works, but it feels like a weird hack. So is there a fully differentiable way to perturb the shape of a point cloud?
 
+Let us assume that we have a few guide points ($s_f$) for this perturbation process. We also have $s_0 \\subset x$, which are the starting point positions for $s_f$. Then, we can perturb points on the shape by attracting them to the sink points $s_f$. This attraction falls off over distance according to the Gaussian radial basis function:
+
+$$
+\\phi_{\\mu'} = e^{-(\\frac{r}{\\mu'})^2}
+$$
+
+The idea is similar to perturbing a few points separately through basic gradient descent, but since the sink points have attraction, they modify the overall shape of the point cloud. Each point is affected by the sum of the attractions of the $\\sigma$ sink points:
+
+$$
+x^\\ast = x + \\tanh\\big(\sum_{j = 1}^\\sigma (s_f[j] - x[i]) \\phi_{\\mu'} (||s_0[j] - x[i]||_2)\\big), \\quad\\forall i \\in \\{1 \\ldots N\\}
+$$
+
+where $\\mu'$ is
+
+$$
+\\mu' = \\frac{\\mu}{N} \\sum_{i = 1}^N \\min_{j \\in \\{1 \\ldots N\\}\\{i\\}} ||x[j] - x[i]||_2
+$$
+
+to ensure that the tunable attraction falloff relies of the distribution of points. Note that the $\\tanh$ is used to clip the perturbations. Since the entire perturbation expression is differentiable, we can use something like Adam to maximize the loss while minimizing the perturbation.
+
+This method is my favorite out of all the shape attacks because it is fully differentiable, so it feels "clean" and not as hacky as resampling points. It was inspired by black holes due to my interest in strange physics stuff like quantum mechanics and spacetime.
 
 # Removing points as an attack
 
+Another avenue for attacking point clouds is through _removing_ points. This is done by dropping points that are part of the critical point set that contribute to decreasing the loss between the model output and the correct class. The saliency (gradient) is used to find these critical points. Note that this idea is very similar to the defense method of removing salient points.
+
+Obviously, removing more points as a defense will not help point clouds that are attacked through point removal. However, this attack is not realistic, as it is difficult to control the lost points from point clouds that are directly scanned from 3D objects.
+
+As a side note, I did independently come up with a similar method to this a long time ago (it is still in my code), but I did not test multiple iterations of this attack, so it did not perform very well, causing me to unfortunately scrap the idea. This idea of removing points is quite popular, and similar attacks has been proposed independently multiple times.
+
+An upsampling network () can be used to defend against adversarially removed points, but it is quite easy to also attack the upsampling network, since it is fully differentiable anyways.
 
 # Beyond 3D point sets
 
@@ -145,4 +174,4 @@ Point clouds are easy to perturb because changing the numerical values in the in
 
 # Conclusion and future directions
 
-So far, creating truly robust defenses by using information exclusive to 3D point clouds, like point density, is still an open problem. In the beginning, we would think that 3D space is somehow more easily defensible than 2D space, but my later work showed that this is not true. 3D space and 2D space have different strengths and vulnerabilities, and there are attacks and defenses that are exclusive to one domain but not the other. As with many work on defenses in 2D, creating defenses that are robust in 3D space is not an easy task---it is quite easy to attack the assumptions that are made in certain defense techniques. From my short journey through adversarial machine learning, I envision the truly robust defense methods to be domain-agnostic, so they do not need to make use of domain-specific properties (like the distribution of points) that may be easily circumvented.
+So far, creating truly robust defenses by using information exclusive to 3D point clouds, like point density, is still an open problem. In the beginning, we would think that 3D space is somehow more easily defensible than 2D space, but my later work showed that this is not true. 3D space and 2D space have different strengths and vulnerabilities, and there are attacks and defenses that are exclusive to one domain but not the other. As with many work on defenses in 2D, creating defenses that are robust in 3D space is not an easy task---it is quite easy to attack the assumptions that are made in certain defense techniques. From my short journey through adversarial machine learning, I envision the truly robust defense methods to be mathematically provable and domain-agnostic, so they do not need to make use of domain-specific properties (like the distribution of points) that may be easily circumvented.
