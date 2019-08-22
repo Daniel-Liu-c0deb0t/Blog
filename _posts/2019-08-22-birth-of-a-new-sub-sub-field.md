@@ -161,13 +161,13 @@ $$
 The idea is similar to perturbing a few points separately through basic gradient descent, but since the sink points have attraction, they modify the overall shape of the point cloud. Each point is affected by the sum of the attractions of the $$\sigma$$ sink points:
 
 $$
-x^\ast = x + \tanh\big(\sum_{j = 1}^\sigma (s_f[j] - x[i]) \phi_{\mu'} (||s_0[j] - x[i]||_2)\big), \quad\forall i \in \{1 \ldots N\}
+x[i]^\ast = x[i] + \tanh\big(\sum_{j = 1}^\sigma (s_f[j] - x[i]) \phi_{\mu'} (||s_0[j] - x[i]||_2)\big), \quad\forall i \in \{1 \ldots N\}
 $$
 
 where $$\mu'$$ is
 
 $$
-\mu' = \frac{\mu}{N} \sum_{i = 1}^N \min_{j \in \{1 \ldots N\}\{i\}} ||x[j] - x[i]||_2
+\mu' = \frac{\mu}{N} \sum_{i = 1}^N \min_{j \in \{1 \ldots N\}\setminus\{i\}} ||x[j] - x[i]||_2
 $$
 
 to ensure that the tunable attraction falloff relies of the distribution of points. Note that the $$\tanh$$ is used to clip the perturbations. Since the entire perturbation expression is differentiable, we can use something like Adam to maximize the loss while minimizing the perturbation. A visualization of the result:
