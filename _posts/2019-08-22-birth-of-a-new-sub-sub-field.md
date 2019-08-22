@@ -161,7 +161,7 @@ $$
 The idea is similar to perturbing a few points separately through basic gradient descent, but since the sink points have attraction, they modify the overall shape of the point cloud. Each point is affected by the sum of the attractions of the $$\sigma$$ sink points:
 
 $$
-x[i]^\ast = x[i] + \tanh\big(\sum_{j = 1}^\sigma (s_f[j] - x[i]) \phi_{\mu'} (||s_0[j] - x[i]||_2)\big), \quad\forall i \in \{1 \ldots N\}
+x^\ast[i] = x[i] + \tanh\big(\sum_{j = 1}^\sigma (s_f[j] - x[i]) \phi_{\mu'} (||s_0[j] - x[i]||_2)\big), \quad\forall i \in \{1 \ldots N\}
 $$
 
 where $$\mu'$$ is
