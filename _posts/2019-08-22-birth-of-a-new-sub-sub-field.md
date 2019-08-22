@@ -178,11 +178,11 @@ This method is my favorite out of all the shape attacks because it is fully diff
 
 For a quick run down of all the attacks proposed in my second paper, just look at this graphic:
 
-![](../assets/attacks_2d.png){:width="700px"}
+![](../assets/attacks_2d.png){:width="800px"}
 
 # Removing points as an attack
 
-Another avenue for attacking point clouds is through _removing_ points ([this](https://arxiv.org/abs/1812.01687) and [this](https://arxiv.org/abs/1902.10899)). This is done by dropping points that are part of the critical point set that contribute to decreasing the loss between the model output and the correct class. The saliency (gradient) is used to find these critical points. Note that this idea is very similar to the defense method of removing salient points.
+Another avenue for attacking point clouds is through _removing_ points ([this](https://arxiv.org/abs/1812.01687) and [this](https://arxiv.org/abs/1902.10899) papers). This is done by dropping points that are part of the critical point set that contribute to decreasing the loss between the model output and the correct class. The saliency (gradient) is used to find these critical points. Note that this idea is very similar to the defense method of removing salient points.
 
 Obviously, removing more points as a defense will not help point clouds that are attacked through point removal. However, this attack is not realistic, as it is difficult to control the lost points from point clouds that are directly scanned from 3D objects.
 
@@ -198,4 +198,4 @@ Point clouds are easy to perturb because changing the numerical values in the in
 
 So far, creating truly robust defenses by using information exclusive to 3D point clouds, like point density, is still an open problem. In the beginning, we would think that 3D space is somehow more easily defensible than 2D space, but my later work showed that this is not true. 3D space and 2D space have different strengths and vulnerabilities, and there are attacks and defenses that are exclusive to one domain but not the other. As with many work on defenses in 2D, creating defenses that are robust in 3D space is not an easy task---it is quite easy to attack the assumptions that are made in certain defense techniques. From my short journey through adversarial machine learning, I envision the truly robust defense methods to be mathematically provable and domain-agnostic, so they do not need to make use of domain-specific properties (like the distribution of points) that may be easily circumvented.
 
-I did not expect that many ideas would be proposed in parallel. When I worked on my papers, I scoured arXiv for any possible related papers, so I can ensure that my work was truly novel. In my latest [paper](https://arxiv.org/abs/1908.06062), I tried my best to come up with a large quantity of out-of-the-box ideas and make use of triangulation and tree algorithms to be unique.
+I did not expect that many ideas would be proposed in parallel. When I worked on my papers, I scoured arXiv for any possible related papers, so I can ensure that my work was truly novel. In my latest [paper](https://arxiv.org/abs/1908.06062), I tried my best to come up with a large quantity of out-of-the-box ideas and make use of triangulation and tree algorithms to be unique. Finally, even I am surprised by the number of ideas proposed in just two of my papers!
