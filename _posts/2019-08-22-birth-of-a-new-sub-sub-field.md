@@ -20,6 +20,8 @@ In this post, I will highlight some interesting ideas born through the intersect
 
 Before we dive into the ideas for attacking and defending 3D neural networks, let us examine what kind of ideas we want to extract in this field. Since we are examining 3D point clouds and neural networks built especially for them, we want to create attacks and defenses that are native to 3D point clouds. We can create attacks and defenses that are universal to all types of inputs, but then we would have to "compete" with previously proposed ideas. If we merely apply ideas that were used for 2D images, which are studied more thoroughly, to 3D space, then we are not bringing major contributions to the table. Therefore, we want to exploit the special properties of both 3D point clouds and the point cloud neural networks in our journey of attacking and defending.
 
+As neural networks are quite easy to attack in general, we want to ensure that our attacks satisfy desirable constraints, like imperceptibility. In 3D space, there are a lot of new constraints to explore that are not present in other domains.
+
 Now, let us go over a little background on 3D point clouds and their neural networks.
 
 ## Point clouds
@@ -202,4 +204,4 @@ Point clouds are easy to perturb because changing the numerical values in the in
 
 So far, creating truly robust defenses by using information exclusive to 3D point clouds, like point density, is still an open problem. In the beginning, we would think that 3D space is somehow more easily defensible than 2D space, but my later work showed that this is not true. 3D space and 2D space have different strengths and vulnerabilities, and there are attacks and defenses that are exclusive to one domain but not the other. As with many work on defenses in 2D, creating defenses that are robust in 3D space is not an easy task---it is quite easy to attack the assumptions that are made in certain defense techniques. From my short journey through adversarial machine learning, I envision the truly robust defense methods to be mathematically provable and domain-agnostic, so they do not need to make use of domain-specific properties (like the distribution of points) that may be easily circumvented.
 
-I did not expect that many ideas would be proposed in parallel. When I worked on my papers, I scoured arXiv for any possible related papers, so I can ensure that my work was truly novel. In my latest [paper](https://arxiv.org/abs/1908.06062), I tried my best to come up with a large quantity of out-of-the-box ideas and make use of triangulation and tree algorithms to be unique. Finally, even I am surprised by the number of ideas proposed in just two of my papers!
+I did not expect that many ideas would be proposed in parallel. When I worked on my papers, I scoured arXiv for any possible related papers, so I can ensure that my work was truly novel.
