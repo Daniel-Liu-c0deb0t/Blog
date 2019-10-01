@@ -54,7 +54,11 @@ $$J$$ represents the loss function, $$y$$ is the label class, and $$f_\theta$$ i
 
 Just like with 2D images, this method works very well for generating adversarial attacks. Here are visualizations of adversarial perturbations (bounded with the $$L_2$$ norm) on a car and a person from the ModelNet40 dataset:
 
-![](../assets/iter_car.png){:width="250px"}![](../assets/iter_person.png){:width="250px"}
+![](../assets/iter_car.png){:width="250px"}
+
+and
+
+![](../assets/iter_person.png){:width="250px"}
 
 The perturbed points are orange.
 
