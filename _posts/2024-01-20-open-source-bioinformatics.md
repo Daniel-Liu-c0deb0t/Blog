@@ -33,7 +33,7 @@ verifying CRISPR edits, etc.
 I also don't thinking we are going to get "foundational models" and "AI agents" in biology without foundational
 bioinformatics tooling first.
 
-## Status Quo
+## Status quo
 What is the state of open source bioinformatics now? Who contributes time and money?
 Here's what I've seen:
 * Scientists and PhD students in their free time, mainly as byproduct of their government grant funded
@@ -43,7 +43,6 @@ This seems to go towards well-known academic labs.
 * Hardware and instrument companies that want to demonstrate their devices:
     * Intel, which develops mm2-fast and bwa-mem2
     * Nvidia, which develops Clara Parabricks
-    * Bioinformatics consulting companies, like Fulcrum Genomics
     * Sequencing companies, like Illumina, Oxford Nanopore, PacBio
 
 Most of these companies seems to have developed more user-facing tools instead of libraries.
@@ -63,6 +62,10 @@ Which type of funding model could work?
     * Possible to provide relatively stable job and career development for one or more software engineers?
 * Open core startup
     * VCs need to make their money back
+    * Unclear if existing open core startups in other domains (like software dev tools) will work well
+    in the long run with this model.
     * Nonzero interest rates is brutal
 * Consulting or bootstrapped startup
+    * Bioinformatics consulting: Fulcrum Genomics
+    * Possible to just sell a (hosted) version without splitting attention and providing consulting services?
 * Get big biotech companies to pay employees that focus on open source
